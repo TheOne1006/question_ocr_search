@@ -1,2 +1,4 @@
 coverage
 *.sqlite
+config.ini
+__pycache__
