@@ -14,6 +14,7 @@ from pathlib import Path
 import configparser
 import os
 import logger
+import datetime
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -154,6 +155,6 @@ LOGGING = {
 }
 
 CRONJOBS = [
-    ('*/5 * * * *', 'crontab_jobs/tarn_2_question_job')
+    ('*/5 * * * *', 'cron.collect.demo', '>> {}{}'.format(BASE_DIR, '/logs/log_collect.log'))
 ]
 
