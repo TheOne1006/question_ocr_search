@@ -44,5 +44,12 @@ export const SUBJECT_CHINESE_MAPPER = {
 ```
 
 
+### script
+
+```shell
+# 创建超级管理员
+python manage.py createsuperuser
+```
+
 ### 设计表结构
 

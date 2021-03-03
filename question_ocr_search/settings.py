@@ -44,8 +44,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #
+    'django_crontab',
+
+    # apps
     'questions.apps.QuestionsConfig',
-    'django_crontab'
+    'origin.apps.OriginConfig',
 ]
 
 MIDDLEWARE = [
@@ -94,7 +98,30 @@ DATABASES = {
         'PASSWORD': config.get('database', 'password'),
         'HOST': config.get('database', 'host'),
         'PORT': '3306',
+    },
+    'source': {
+        # 引擎
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': config.get('source_db', 'name'),
+        'USER': config.get('source_db', 'user'),
+        'PASSWORD': config.get('source_db', 'password'),
+        'HOST': config.get('source_db', 'host'),
+        'PORT': '3306',
+        # 'ENGINE': 'django.db.backends.mysql',
+        # 'NAME': 'test_db',
+        # 'USER': config.get('database', 'user'),
+        # 'PASSWORD': config.get('database', 'password'),
+        # 'HOST': config.get('database', 'host'),
+        # 'PORT': '3306',
     }
+}
+
+DATABASE_ROUTERS = ['question_ocr_search.database_router.DatabaseAppsRouter']
+
+DATABASE_APPS_MAPPING = {
+    'admin': 'default',
+    'questions': 'default',
+    'origin': 'source',
 }
 
 

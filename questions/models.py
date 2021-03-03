@@ -19,7 +19,7 @@ class commonQuestions(models.Model):
         abstract = True
 
     def __str__(self):  # Python2:__unicode__
-        return self.id
+        return self.pic_title
 
 
 class ChineseQuestion(commonQuestions):
