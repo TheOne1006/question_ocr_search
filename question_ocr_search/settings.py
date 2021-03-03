@@ -182,6 +182,6 @@ LOGGING = {
 }
 
 CRONJOBS = [
-    ('*/5 * * * *', 'cron.collect.demo', '>> {}{}'.format(BASE_DIR, '/logs/log_collect.log'))
+    ('*/5 * * * *', 'cron.collect.importChinese', '>> {}{}'.format(BASE_DIR, '/logs/log_collect.log'))
 ]
 

@@ -49,6 +49,9 @@ export const SUBJECT_CHINESE_MAPPER = {
 ```shell
 # 创建超级管理员
 python manage.py createsuperuser
+
+
+python manage.py crontab add
 ```
 
 ### 设计表结构
