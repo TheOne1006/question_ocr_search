@@ -1,8 +1,9 @@
 ## TODO
 
-1. 科目questions 表
-2. elk 搜索
-3. 计划任务
+[x] 科目questions 表  
+[] 导入信息  
+[] elk 搜索  
+[] 计划任务  
 
 
 

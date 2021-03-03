@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'questions.apps.QuestionsConfig',
+    'django_crontab'
 ]
 
 MIDDLEWARE = [
@@ -151,3 +152,8 @@ LOGGING = {
         },
     }
 }
+
+CRONJOBS = [
+    ('*/5 * * * *', 'crontab_jobs/tarn_2_question_job')
+]
+
