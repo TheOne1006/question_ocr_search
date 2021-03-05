@@ -1,0 +1,2 @@
+{{ object.text_title }}
+{{ object.text_answer }}

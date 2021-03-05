@@ -11,6 +11,8 @@
 
 1. [ocr](https://github.com/breezedeus/cnocr)
 2. [easyOcr](https://github.com/JaidedAI/EasyOCR)
+3. [haystack](http://haystacksearch.org/)
+    - 数据导入与搜索
 
 
 ### 导入数据
@@ -64,4 +66,10 @@ python manage.py
 ```
 
 ### 设计表结构
+
+
+
+### 加入搜索
+
+http://haystacksearch.org/
 

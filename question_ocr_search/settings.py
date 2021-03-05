@@ -44,8 +44,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #
+    # 计划任务
     'django_crontab',
+    # 搜索 orm
+    'haystack',
 
     # apps
     'questions.apps.QuestionsConfig',
@@ -180,6 +182,25 @@ LOGGING = {
         },
     }
 }
+
+
+# Haystack
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        # elasticsearch运行的服务器ip地址，端口号默认为9200
+        'URL': 'http://elastic:changeme@localhost:9200/', # 配置 IP:port
+        # elasticsearch建立的索引库的名称，一般使用项目名作为索引库
+        'INDEX_NAME': 'questions',
+    },
+}
+
+
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 5
+
+# 设置在Django运行时，如果有数据产生变化(添加、修改、删除)，
+# haystack会自动让Elasticsearch实时生成新数据的索引
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 CRONJOBS = [
     ('*/50 * * * *', 'cron.collect.importChinese'),
