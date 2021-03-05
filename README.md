@@ -4,7 +4,13 @@
 [] 导入信息  
 [] elk 搜索  
 [] 计划任务  
+[] 
 
+
+## feature
+
+1. [ocr](https://github.com/breezedeus/cnocr)
+2. [easyOcr](https://github.com/JaidedAI/EasyOCR)
 
 
 ### 导入数据
@@ -52,6 +58,9 @@ python manage.py createsuperuser
 
 
 python manage.py crontab add
+
+
+python manage.py 
 ```
 
 ### 设计表结构

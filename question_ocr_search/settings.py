@@ -182,6 +182,9 @@ LOGGING = {
 }
 
 CRONJOBS = [
-    ('*/5 * * * *', 'cron.collect.importChinese', '>> {}{}'.format(BASE_DIR, '/logs/log_collect.log'))
+    ('*/50 * * * *', 'cron.collect.importChinese'),
+    # ('*/50 * * * *', 'cron.collect.importChinese', '>> {}{}'.format(BASE_DIR, '/logs/log_collect.log')),
+    ('*/50 * * * *', 'cron.ocr_pic.stepTranTextChinese'),
+    # ('*/50 * * * *', 'cron.ocr_pic.stepTranTextChinese', '>> {}{}'.format(BASE_DIR, '/logs/log_ocr.log')),
 ]
 
