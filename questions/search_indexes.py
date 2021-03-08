@@ -16,6 +16,7 @@ class ChineseQuestionIndex(indexes.SearchIndex, indexes.Indexable):
 
     qid = indexes.IntegerField(model_attr='id')
     origin_id = indexes.IntegerField(model_attr='origin_id')
+    origin_type = indexes.CharField(model_attr='origin_type')
     model_version = indexes.IntegerField(model_attr='version')
 
     def get_model(self):
