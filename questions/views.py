@@ -4,7 +4,9 @@ from django.shortcuts import render
 from datetime import date
 from .search_indexes import ChineseQuestionIndex
 from haystack.generic_views import SearchView
+from django.views.generic import View
 from django.http import JsonResponse
+from django.shortcuts import render
 
 from elasticsearch import Elasticsearch, RequestsHttpConnection
 
@@ -15,11 +17,13 @@ def eSearch(request):
     es_client = Elasticsearch(hosts=['http://localhost'],
                               http_auth=http_auth,
                               port=9200)
+    keyword = request.GET['q']
+
     body = {
         "query": {
             "match": {
                 "text": {
-                    "query": "我的心中已没有瀑布了。我的心随潭水的绿而摇荡。那醉人的绿呀，仿佛一开两臂",
+                    "query": keyword,
                     "fuzziness": "AUTO",
                     "operator": "and"
                 }
@@ -31,5 +35,8 @@ def eSearch(request):
 
     return JsonResponse(result, content_type='application/json', safe=False)
 
+class IndexView(View):
 
+    def get(self, request):
+        return render(request, 'search/search.html')
 

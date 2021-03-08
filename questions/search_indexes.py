@@ -11,8 +11,8 @@ class ChineseQuestionIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
 
     # 保存在索引库中的字段
-    # text_title = indexes.CharField(model_attr='text_title')
-    # text_answer = indexes.CharField(model_attr='text_answer')
+    pic_title = indexes.CharField(model_attr='pic_title')
+    pic_answer = indexes.CharField(model_attr='pic_answer')
 
     qid = indexes.IntegerField(model_attr='id')
     origin_id = indexes.IntegerField(model_attr='origin_id')
