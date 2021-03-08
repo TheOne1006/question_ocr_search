@@ -8,10 +8,15 @@
     <title>Document</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-
     <script src="https://cdn.bootcdn.net/ajax/libs/lodash.js/4.17.20/lodash.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        .preview {
+            max-width: 200px;
+        }
+    </style>
 </head>
+
 <body>
 <div class="container">
     <h1>题目搜索</h1>
@@ -25,7 +30,18 @@
             <label for="exampleInputEmail1">题目信息</label>
             <input type="text" class="form-control" id="q" placeholder="请输入关键字">
         </div>
-        <input  class="btn btn-primary" type="submit" id="searchBtn" value="搜索">
+        <div class="form-group">
+            <div id="previewe" style="max-width: 200px"></div>
+            <input type="file" class="form-control" id="uploadfileInput" placeholder="上传图片">
+        </div>
+
+        <div class="progress">
+            <div id="process" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <br />
+        <div class="form-group">
+            <input class="btn btn-primary" type="submit" id="searchBtn" value="搜索">
+        </div>
     </div>
 
     <br/>
@@ -68,21 +84,74 @@
 </script>
 
 <script>
+
+    function previewImg(element, tag) {
+        var file = tag.files[0];
+        var imgSrc;
+        if (!/image\/\w+/.test(file.type)) {
+            alert("看清楚，这个需要图片！");
+            return false;
+        }
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function() {
+            {#console.log(this.result);#}
+            imgSrc = this.result;
+            var imgs = document.createElement("img");
+
+            $(imgs).attr("src", imgSrc);
+            $(imgs).addClass('preview')
+            element.append(imgs);
+        };
+    }
 $(function () {
+
+
+    var xhr=new XMLHttpRequest();
+    xhr.upload.onprogress=function(e){}
+    var xhrOnProgress=function(fun) {
+        xhrOnProgress.onprogress = fun; //绑定监听
+        //使用闭包实现监听绑
+        return function () {
+            //通过$.ajaxSettings.xhr();获得XMLHttpRequest对象
+            var xhr = $.ajaxSettings.xhr();
+            //判断监听函数是否为函数
+            if (typeof xhrOnProgress.onprogress !== 'function')
+                return xhr;
+            //如果有监听函数并且xhr对象支持绑定时就把监听函数绑定上去
+            if (xhrOnProgress.onprogress && xhr.upload) {
+                xhr.upload.onprogress = xhrOnProgress.onprogress;
+            }
+            return xhr;
+        }
+    }
+
+
+    // 上传预览
+    $('#uploadfileInput').change(function (e) {
+        $('#q').val('')
+         var imgBox = e.target;
+        $('#previewe').empty()
+        previewImg($('#previewe'), imgBox)
+    })
+
+
+    // 点击切换 tab
     $('#list').delegate('a', 'click', function (event) {
       event.preventDefault()
       var index = $(this).data('index');
         $('.tab-pane').removeClass('show active')
 
-        console.log(index)
 
         $('.tab-pane').eq(index-1).addClass('show active')
     })
 
+    // pre ready
     var templateStr = $('#list_template').text()
     var compiled = _.template(templateStr)
 
 
+    // 渲染html
     function renderList(list) {
         var dom = compiled({list: list})
         var renderDom = $(dom)
@@ -91,20 +160,50 @@ $(function () {
 
     }
 
+    // 搜索按钮
     $('#searchBtn').click(function () {
         var qKey = $('#q').val()
-        $.get('/questions/search?q='+qKey, function (res) {
+
+
+        var formData = new FormData();
+
+        var ufile = $('#uploadfileInput')[0].files[0]
+        if (ufile) {
+            console.log(ufile)
+            formData.append('file', ufile);  //添加图片信息的参数
+        }
+
+
+
+        $.ajax({
+            url: '/questions/search?q='+qKey,
+            cache: false,
+            type: 'post',
+            data: formData,
+            processData: false, // 告诉jQuery不要去处理发送的数据
+            contentType: false, // 告诉jQuery不要去设置Content-Type请求头
+            xhr: xhrOnProgress(function(e) {
+                var per = 100 * e.loaded / e.total;//计算百分比
+                var son = document.getElementById('process');
+                son.innerHTML = per + "%";
+                son.style.width = per + "%";
+            }),
+            success: function (res) {
             if (res && res.hits && res.hits.total.value) {
                 // console.log(res.hits.hits)
-                var list = res.hits.hits.map((item) => ({
-                    pic_answer: item._source.pic_answer,
-                    pic_title: item._source.pic_title,
-                    text: item._source.text,
-                }))
+                var list = res.hits.hits.map(function (item) {
+                    return {
+                        pic_answer: item._source.pic_answer,
+                        pic_title: item._source.pic_title,
+                        text: item._source.text,
+                    }
+                })
 
                 renderList(list)
             }
+        }
         })
+        $.get('/questions/search?q='+qKey, )
     })
 })
 

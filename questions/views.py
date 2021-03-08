@@ -1,16 +1,17 @@
 from django.shortcuts import render
 
 # Create your views here.
-from datetime import date
-from .search_indexes import ChineseQuestionIndex
-from haystack.generic_views import SearchView
+from PIL import Image
+import numpy as np
+from cnocr import CnOcr
+from io import BytesIO
 from django.views.generic import View
 from django.http import JsonResponse
 from django.shortcuts import render
 
-from elasticsearch import Elasticsearch, RequestsHttpConnection
+from elasticsearch import Elasticsearch
 
-
+ocr = CnOcr()
 http_auth = ('elastic', 'changeme')
 
 def eSearch(request):
@@ -18,6 +19,17 @@ def eSearch(request):
                               http_auth=http_auth,
                               port=9200)
     keyword = request.GET['q']
+
+    picfile = request.FILES.get('file')
+
+    if (picfile):
+        """存在上传图片"""
+
+        img_fp = Image.open(picfile)
+        np_image = np.array(img_fp)
+        res = ocr.ocr(np_image)
+        keyword = '\n'.join([''.join(a) for a in res])
+
 
     body = {
         "query": {
