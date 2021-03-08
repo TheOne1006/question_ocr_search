@@ -5,6 +5,7 @@ from io import BytesIO
 from cnocr import CnOcr
 from questions.models import ChineseQuestion
 from time import sleep
+import random
 
 ocr = CnOcr()
 
@@ -27,14 +28,22 @@ def stepTranTextChinese():
     QModel = ChineseQuestion
     limit = 10
 
-    for i in range(10):
+    for i in range(100):
         stepTranTextCommon(QModel, limit)
         sleep(1)
 
 
 
 def stepTranTextCommon(QModel, limit):
-    list = QModel.objects.filter(step=1).order_by('id')[:limit]
+    count = QModel.objects.filter(step=1).count()
+
+    skip = 0
+
+    if count > limit:
+        skip = random.randint(1, count)
+
+
+    list = QModel.objects.filter(step=1).order_by('id')[skip:skip+limit]
 
     if len(list) == 0:
         return

@@ -13,6 +13,7 @@ class commonQuestions(models.Model):
     step = models.IntegerField(default="1", verbose_name="步骤")
     text_title = models.TextField(default="", verbose_name="题目文本")
     text_answer = models.TextField(default="", verbose_name="答案文本")
+    same_guids = models.TextField(default="", verbose_name="同类题guid")
     version = models.IntegerField(default="0", verbose_name="版本")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="更新时间")

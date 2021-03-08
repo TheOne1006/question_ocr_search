@@ -73,3 +73,18 @@ python manage.py
 
 http://haystacksearch.org/
 
+```shell
+# 模糊匹配
+GET questions/_search
+{
+  "query": {
+    "match": {
+      "text": {
+        "query":   "情、爱情的期待和渴 大篮子，里面的鸥和鸭子把头伸在篮子外面。我犹豫了好一会儿之后，决定走进车厢。我说，很对不起了，让我来把篮子移开。可是一位穿着工作服的农民对我又说我在登上车",
+        "fuzziness": "AUTO",
+        "operator":  "and"
+      }
+    }
+  }
+}
+```

@@ -206,6 +206,7 @@ CRONJOBS = [
     ('*/50 * * * *', 'cron.collect.importChinese'),
     # ('*/50 * * * *', 'cron.collect.importChinese', '>> {}{}'.format(BASE_DIR, '/logs/log_collect.log')),
     ('*/50 * * * *', 'cron.ocr_pic.stepTranTextChinese'),
+    # ('*/58 * * * *', 'cron.help.replenish'),
     # ('*/50 * * * *', 'cron.ocr_pic.stepTranTextChinese', '>> {}{}'.format(BASE_DIR, '/logs/log_ocr.log')),
 ]
 
