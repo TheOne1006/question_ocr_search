@@ -3,11 +3,11 @@ import numpy as np
 import requests
 from io import BytesIO
 from cnocr import CnOcr
-from questions.models import ChineseQuestion
+from questions.models import ChineseQuestion, EnglishQuestion
 from time import sleep
 import random
 
-ocr = CnOcr()
+ocr = CnOcr(name='img-tarn')
 
 """
 example
@@ -29,6 +29,18 @@ def stepTranTextChinese():
     limit = 10
 
     for i in range(100):
+        stepTranTextCommon(QModel, limit)
+        sleep(1)
+
+
+"""
+语文图片转换文字脚本
+"""
+def stepTranTextEnglish():
+    QModel = EnglishQuestion
+    limit = 10
+
+    for i in range(10):
         stepTranTextCommon(QModel, limit)
         sleep(1)
 

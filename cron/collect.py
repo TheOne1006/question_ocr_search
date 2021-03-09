@@ -6,12 +6,33 @@ import django
 from datetime import date
 
 from django.db.models import Max, Min, Q
-from questions.models import ChineseQuestion
+from questions.models import ChineseQuestion, EnglishQuestion
 from origin.models import SectionInfo, SameSectionInfo
 from time import sleep
 import requests
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'question_ocr_search.settings'  # 设置项目的配置文件
+
+
+def importEnglish():
+    """
+    核心题库
+    导入英语信息
+    """
+    subject = 3
+    QModel = EnglishQuestion
+    limit = 1000
+
+    preNextId = 30800
+
+    for i in range(100):
+        preNextId = importCoreSection(subject, QModel, limit, preNextId)
+        print(preNextId)
+        sleep(1)
+
+    for i in range(1000):
+        importSameSection(QModel, limit)
+
 
 
 
@@ -54,6 +75,9 @@ def importSameSection(QModel, limit):
         arr = item.same_guids.split(',')
         for arrItem in arr:
             instance = SameSectionInfo.objects.get(guid=arrItem)
+
+            if not instance:
+                continue
 
             if instance.sectiontitle and instance.sectionanswer:
                 titleurl = f"https://image.jiandan100.cn/images/cqaimages/{instance.sectiontitle}"
@@ -104,7 +128,11 @@ def importCoreSection(subject, QModel, limit, preNextId):
     返回最后一条 origin id
     """
     res = QModel.objects.filter(origin_type='section').order_by('origin_id').first()
-    maxId = res.origin_id
+
+    maxId = 0
+    if res:
+        maxId = res.origin_id
+
     nextId = maxId if maxId else preNextId
 
     print(preNextId)
@@ -122,6 +150,6 @@ def importCoreSection(subject, QModel, limit, preNextId):
         titleurl = f"https://image.jiandan100.cn/images/cqaimages/{item.sectiontitle}"
         answerurl = f"https://image.jiandan100.cn/images/cqaimages/{item.sectionkey}"
 
-        importQuestionItem('section', titleurl, answerurl, item.origin, item.samesectiondata, QModel)
+        importQuestionItem('section', titleurl, answerurl, item.id_inc, item.samesectiondata, QModel)
 
     return list[len(list) - 1].id_inc

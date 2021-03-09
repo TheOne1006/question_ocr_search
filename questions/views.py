@@ -11,7 +11,7 @@ from django.shortcuts import render
 
 from elasticsearch import Elasticsearch
 
-ocr = CnOcr()
+ocr = CnOcr(name='post-image')
 http_auth = ('elastic', 'changeme')
 
 def eSearch(request):
