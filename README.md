@@ -14,6 +14,7 @@
 
 1. [ocr](https://github.com/breezedeus/cnocr)
 2. [easyOcr](https://github.com/JaidedAI/EasyOCR)
+3. [paddleocr](https://github.com/PaddlePaddle/PaddleOCR)
 3. [haystack](http://haystacksearch.org/)
     - 数据导入与搜索
 
@@ -90,4 +91,19 @@ GET questions/_search
     }
   }
 }
+```
+
+
+###  安装 paddleocr
+
+
+```shell
+mkdir inference && cd inference
+
+wget https://paddleocr.bj.bcebos.com/dygraph_v2.0/ch/ch_ppocr_server_v2.0_det_infer.tar && tar xf ch_ppocr_server_v2.0_det_infer.tar
+# 下载超轻量级中文OCR模型的识别模型并解压
+wget https://paddleocr.bj.bcebos.com/dygraph_v2.0/ch/ch_ppocr_server_v2.0_rec_infer.tar && tar xf ch_ppocr_server_v2.0_rec_infer.tar
+# 下载超轻量级中文OCR模型的文本方向分类器模型并解压
+wget https://paddleocr.bj.bcebos.com/dygraph_v2.0/ch/ch_ppocr_mobile_v2.0_cls_infer.tar && tar xf ch_ppocr_mobile_v2.0_cls_infer.tar
+cd ..
 ```

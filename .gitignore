@@ -2,3 +2,4 @@ coverage
 *.sqlite
 config.ini
 __pycache__
+inference

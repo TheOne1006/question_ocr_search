@@ -11,8 +11,13 @@ from django.shortcuts import render
 
 from elasticsearch import Elasticsearch
 
-ocr = CnOcr(name='post-image')
+# from paddleocr import PaddleOCR
+# ocr = PaddleOCR()
 http_auth = ('elastic', 'changeme')
+
+ocr = CnOcr(name='img-upload', model_name='densenet-lite-gru')
+
+
 
 def eSearch(request):
     es_client = Elasticsearch(hosts=['http://localhost'],
@@ -24,20 +29,23 @@ def eSearch(request):
 
     if (picfile):
         """存在上传图片"""
-
         img_fp = Image.open(picfile)
         np_image = np.array(img_fp)
         res = ocr.ocr(np_image)
         keyword = '\n'.join([''.join(a) for a in res])
+
+        print(keyword)
+
 
 
     body = {
         "query": {
             "match": {
                 "text": {
+                    "minimum_should_match": "75%",
                     "query": keyword,
-                    "fuzziness": "AUTO",
-                    "operator": "and"
+                    # "fuzziness": "AUTO",
+                    # "operator": "and"
                 }
             }
         }
