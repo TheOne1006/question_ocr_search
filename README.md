@@ -10,6 +10,12 @@
 [] 计划任务  
 
 
+### env
+
+Python 3.7.9
+Django 3.1.6
+
+
 ## feature
 
 1. [ocr](https://github.com/breezedeus/cnocr)
@@ -67,6 +73,49 @@ python manage.py crontab add
 
 
 python manage.py 
+```
+
+### 初始化
+
+```shell
+# 搭建mysql 和 elk
+
+# 使用 conda 创建环境
+conda create -n qs python=3.7
+
+# 安装依赖
+pip install -r requirements.txt
+
+# 初始化 环境变量
+cp config.template.ini config.ini
+
+# settings 中 配置 elk 地址 
+HAYSTACK_CONNECTIONS
+
+# 创建执行迁移文件
+python manage.py makemigrations
+
+# 执行迁移文件 （初始化已存在的表）
+python manage.py migrate
+
+# 创建超级管理员
+python manage.py createsuperuser
+
+# 启动服务 
+python manage.py runserver
+
+# 导入SQL数据 dep_server/initsql/query_result.csv
+
+# 执行迁移脚本
+
+# 导入 搜索引擎
+python manage.py rebuild_index
+
+# 后台地址
+open 'http://127.0.0.1:8000/admin/'
+
+# 题目搜索
+open 'http://127.0.0.1:8000/questions/index'
 ```
 
 ### 设计表结构

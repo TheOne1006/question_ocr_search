@@ -47,8 +47,7 @@ INSTALLED_APPS = [
     # 计划任务
     'django_crontab',
     # 搜索 orm
-    # 'haystack',
-
+    'haystack',
     # apps
     'questions.apps.QuestionsConfig',
     'origin.apps.OriginConfig',
@@ -100,6 +99,9 @@ DATABASES = {
         'PASSWORD': config.get('database', 'password'),
         'HOST': config.get('database', 'host'),
         'PORT': '3306',
+        'OPTIONS': {
+            "init_command": "SET foreign_key_checks = 0;",
+        }
     },
     'source': {
         # 引擎
@@ -118,12 +120,12 @@ DATABASES = {
     }
 }
 
-DATABASE_ROUTERS = ['question_ocr_search.database_router.DatabaseAppsRouter']
+# DATABASE_ROUTERS = ['question_ocr_search.database_router.DatabaseAppsRouter']
 
 DATABASE_APPS_MAPPING = {
     'admin': 'default',
     'questions': 'default',
-    'origin': 'source',
+    # 'origin': 'source', # todo: 移除，爬虫独立
 }
 
 

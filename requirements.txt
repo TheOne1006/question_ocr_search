@@ -1,0 +1,13 @@
+Django==3.1.6
+django-crontab==0.7.1
+django-debug-toolbar==3.2
+django-filter==2.4.0
+django-haystack==3.0
+elasticsearch==7.11.0
+django-haystack==3.0
+opencv-python==4.5.1.48
+numpy==1.19.5
+Pillow==8.1.0
+cnocr==1.2.2
+logger==1.4
+mysqlclient==2.0.3

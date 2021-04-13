@@ -1,5 +1,6 @@
 coverage
 *.sqlite
 config.ini
+config.prod.ini
 __pycache__
 inference
