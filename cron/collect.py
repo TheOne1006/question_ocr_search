@@ -43,14 +43,14 @@ def importChinese():
     """
     subject = 1
     QModel = ChineseQuestion
-    limit = 100
+    limit = 1000
 
-    preNextId = 922942
+    preNextId = 30800
 
-    # for i in range(10):
-    #     preNextId = importCoreSection(subject, QModel, limit, preNextId)
-    #     print(preNextId)
-    #     sleep(1)
+    for i in range(10):
+        preNextId = importCoreSection(subject, QModel, limit, preNextId)
+        print(preNextId)
+        sleep(1)
 
     for i in range(10):
         importSameSection(QModel, limit)

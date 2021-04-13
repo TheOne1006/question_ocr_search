@@ -15,7 +15,7 @@
 1. [ocr](https://github.com/breezedeus/cnocr)
 2. [easyOcr](https://github.com/JaidedAI/EasyOCR)
 3. [paddleocr](https://github.com/PaddlePaddle/PaddleOCR)
-3. [haystack](http://haystacksearch.org/)
+4. [haystack](http://haystacksearch.org/)
     - 数据导入与搜索
 
 

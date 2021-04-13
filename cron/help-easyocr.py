@@ -17,6 +17,7 @@ example
 reader = easyocr.Reader(['ch_sim','en'])
 
 result = reader.readtext('https://image.jiandan100.cn/images/cqaimages/42/255/2817944_q.jpg', detail = 0)
+# result = reader.readtext('http://8.210.115.9/img.php?num=NjMyMzgy', detail = 0)
 # result = reader.readtext('https://image.jiandan100.cn/images/cqaimages/4/136/297196_q.jpg', detail = 0)
 print(result)
 

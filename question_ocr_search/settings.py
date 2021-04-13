@@ -203,7 +203,7 @@ HAYSTACK_SEARCH_RESULTS_PER_PAGE = 5
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 CRONJOBS = [
-    # ('*/50 * * * *', 'cron.collect.importChinese'),
+    ('*/6 * * * *', 'cron.collect.importChinese'),
     # ('*/50 * * * *', 'cron.collect.importEnglish'),
     # ('*/50 * * * *', 'cron.collect.importChinese', '>> {}{}'.format(BASE_DIR, '/logs/log_collect.log')),
     ('*/4 * * * *', 'cron.ocr_pic.stepTranTextChinese'),

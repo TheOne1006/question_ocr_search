@@ -45,7 +45,7 @@ def stepTranTextChinese():
     QModel = ChineseQuestion
     limit = 10
 
-    for i in range(8):
+    for i in range(3):
         stepTranTextCommon(QModel, limit)
         sleep(1)
 
@@ -57,7 +57,7 @@ def stepTranTextEnglish():
     QModel = EnglishQuestion
     limit = 10
 
-    for i in range(8):
+    for i in range(5):
         stepTranTextCommon(QModel, limit)
         sleep(1)
 
